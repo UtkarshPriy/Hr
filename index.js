@@ -6,11 +6,12 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import User from './src/controller/user.controller.js';
 import ejs from 'ejs';
-
+import methodOverride from 'method-override';
 
 const app = express();
 
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 app.set('views', path.join(path.resolve(), 'src', 'view'));
 app.use(express.static(path.join(path.resolve(), 'src', 'public')));
 app.use(urlencoded({
