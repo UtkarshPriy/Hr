@@ -57,4 +57,12 @@ export default class User{
         }
       };
 
+    addsubAdminpage = (req,res)=>{
+        res.status(200).render("add_sub_admin");
+    }
+    updatesubAdminpage = (req,res)=>{
+        res.status(200).render("update_sub_admin");
+
+    }
+
 }

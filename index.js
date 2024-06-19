@@ -29,6 +29,8 @@ app.get('/',userCntrl.home);
 app.get('/signIn',userCntrl.signin);
 app.post('/addAdmin',userCntrl.addAdmin);
 app.post('/adminlogin',userCntrl.loginAdmin);
+app.get('/addsubadmin',userCntrl.addsubAdminpage);
+app.get("/updatesubAdmin",userCntrl.updatesubAdminpage);
 
 
 
