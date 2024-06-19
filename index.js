@@ -5,6 +5,7 @@ import { urlencoded } from 'express';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import User from './src/controller/user.controller.js';
+import db from './src/config/mongoose.config.js';
 import ejs from 'ejs';
 import methodOverride from 'method-override';
 
