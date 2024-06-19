@@ -67,7 +67,7 @@ export default class User{
 
     updateUserStatus = async(req,res)=>{
         try{
-            // const email = req.params.email;
+            // Add last Updated By
             const { email,status } = req.body;
             const updatedUser = await  UserList.findOneAndUpdate({ email: email }, { status }, { new: true });
             const sub_admin_list = await UserList.find({role:"sub_admin"});
