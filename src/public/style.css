@@ -54,7 +54,7 @@ header p {
     text-decoration: none;
 }
 
-contact-info a:hover {
+.contact-info a:hover {
     text-decoration: underline;
 }
 
@@ -122,6 +122,7 @@ footer p {
     margin: 0;
     font-size: 0.9rem;
 }
+
 /* Custom styles for admin options */
 .admin-options {
     margin-top: 20px;
@@ -156,4 +157,74 @@ footer p {
 
 .admin-options a:hover {
     background-color: #f0f0f0;
+}
+
+/* Media queries for different screen sizes */
+@media only screen and (min-width: 768px) {
+    /* Styles for tablets and larger screens */
+    header h1 {
+        font-size: 3rem;
+    }
+
+    header p {
+        font-size: 1.4rem;
+    }
+
+    nav ul li {
+        margin: 0 2rem;
+    }
+
+    section h2 {
+        font-size: 2.5rem;
+    }
+
+    section p {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    /* Styles for desktops */
+    header h1 {
+        font-size: 4rem;
+    }
+
+    header p {
+        font-size: 1.6rem;
+    }
+
+    nav ul li {
+        margin: 0 3rem;
+    }
+
+    section h2 {
+        font-size: 3rem;
+    }
+
+    section p {
+        font-size: 1.4rem;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    /* Styles for larger desktops */
+    header h1 {
+        font-size: 5rem;
+    }
+
+    header p {
+        font-size: 1.8rem;
+    }
+
+    nav ul li {
+        margin: 0 4rem;
+    }
+
+    section h2 {
+        font-size: 3.5rem;
+    }
+
+    section p {
+        font-size: 1.6rem;
+    }
 }
