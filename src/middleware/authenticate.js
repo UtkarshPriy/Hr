@@ -44,4 +44,12 @@ export default class Authicate{
           res.status(500).json({ message: 'Server error' });
         }
       };
+      signOut = (req, res) => {
+        res.cookie('jwt', '', {
+            httpOnly: true,
+            expires: new Date(0)
+        });
+        return res.status(200).render('login');
+
+    }
 }

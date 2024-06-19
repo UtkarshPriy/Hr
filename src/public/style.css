@@ -228,3 +228,15 @@ footer p {
         font-size: 1.6rem;
     }
 }
+/* Style for the logout link */
+.logout-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #333;
+    border-radius: 5px;
+}

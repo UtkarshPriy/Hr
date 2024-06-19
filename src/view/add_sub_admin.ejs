@@ -9,12 +9,18 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <% if (typeof message !== 'undefined' && message.length > 0) { %>
+        <div class="alert alert-info ">
+            <%- message %>
+        </div>
+        <% } %>
     <header>
         <div class="logo-container">
             <img src="/logo-small.png" alt="HR Covered Logo" class="logo">
         </div>
         <h1>New User</h1>
         <p>Your one-stop solution for HR management.</p>
+        <a href="/logout" class="logout-link">Logout</a> <!-- Logout link in top right corner -->
     </header>
     <main class="container mt-5">
         <div class="row justify-content-center">
