@@ -28,6 +28,7 @@ const userCntrl = new User();
 app.get('/',userCntrl.home);
 app.get('/signIn',userCntrl.signin);
 app.post('/addAdmin',userCntrl.addAdmin);
+app.post('/adminlogin',userCntrl.loginAdmin);
 
 
 
