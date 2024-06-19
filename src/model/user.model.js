@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const { isEmail } = require('validator');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import  validator  from 'validator';
+
+const { Schema } = mongoose;
 
 // Define the user schema
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: [true, 'Username is required'],
@@ -18,7 +20,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    validate: [isEmail, 'Please enter a valid email']
+    validate: [validator.isEmail, 'Please enter a valid email']
   },
   password: {
     type: String,
@@ -41,10 +43,12 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   },
   lastUpdatedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    type: String,
+    required: true,
+    trim: true,
+    default: 'null'
   }
-}, { timestamps: true });
+});
 
 // Pre-save middleware to hash the password before saving
 userSchema.pre('save', async function(next) {
@@ -77,6 +81,21 @@ userSchema.methods.toJSON = function() {
 };
 
 // Create the user model
-const User = mongoose.model('User', userSchema);
+const UserList = mongoose.model('UserList', userSchema);
 
-export default User;
+export default UserList;
+
+/* 
+// Example of using ObjectId and reference for lastUpdatedBy
+// Uncomment this block if you want to use ObjectId and reference
+// lastUpdatedBy: {
+//   type: mongoose.Schema.Types.ObjectId,
+//   ref: 'User'
+// }
+*/
+
+/*
+// Example of using timestamps option
+// Uncomment this block if you want to use timestamps option
+// }, { timestamps: true });
+*/

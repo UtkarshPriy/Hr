@@ -19,12 +19,16 @@ app.use(urlencoded({
     extended: true
 }));
 app.use(cookieParser());
+app.use(express.json());
+
 
 const userCntrl = new User();
 
 
 app.get('/',userCntrl.home);
 app.get('/signIn',userCntrl.signin);
+app.post('/addAdmin',userCntrl.addAdmin);
+
 
 
 
