@@ -22,6 +22,7 @@ const userCntrl = new User();
 
 
 app.get('/',userCntrl.home);
+app.get('/signIn',userCntrl.signin);
 
 
 
