@@ -51,6 +51,7 @@ app.get('/addsubadmin',userCntrl.addsubAdminpage);
 app.get("/updatesubAdmin",userCntrl.updatesubAdminpage);
 app.post("/addsubadmin",userCntrl.addsubAdmin);
 app.get('/logout',authCntrl.signOut);
+app.post('/changeStatus',userCntrl.updateUserStatus);
 
 
 

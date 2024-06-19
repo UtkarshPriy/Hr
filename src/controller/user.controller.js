@@ -63,9 +63,23 @@ export default class User{
             console.log(error);
             res.status(401).send('Internal Server Error');
         }
+    };
+
+    updateUserStatus = async(req,res)=>{
+        try{
+            // const email = req.params.email;
+            const { email,status } = req.body;
+            const updatedUser = await  UserList.findOneAndUpdate({ email: email }, { status }, { new: true });
+            const sub_admin_list = await UserList.find({role:"sub_admin"});
+            req.flash('message', 'Status Updated');
+            return res.render('update_sub_admin',{ message: req.flash('message') },{users:sub_admin_list});
+        }catch(error){
+            console.log(error);
+            req.flash('message', 'Unable to Update');
+            return res.render('update_sub_admin',{ message: req.flash('message') },{users:sub_admin_list});
+        }
         
 
-
-    }
+    };
 
 }

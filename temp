@@ -13,7 +13,7 @@
         <div class="alert alert-info ">
             <%- message %>
         </div>
-    <% } %>
+        <% } %>
     <header>
         <div class="logo-container">
             <img src="/logo-small.png" alt="HR Covered Logo" class="logo">
@@ -36,7 +36,7 @@
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Status</th>
-                                    <!-- <th>Action</th> -->
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,18 +44,13 @@
                                     <tr>
                                         <td><%= user.username %></td>
                                         <td><%= user.email %></td>
+                                        <td><%= user.status %></td>
                                         <td>
-                                            <form action="/changeStatus" method="POST">
-                                                <input type="hidden" name="email" value="<%= user.email %>"> <!-- Hidden input for user email -->
-                                                <!-- <input type="hidden" name="_method" value="PUT"> -->
-                                                <div class="form-group">
-                                                    <select class="form-control" name="status">
-                                                        <option value="active" <%= user.status === 'active' ? 'selected' : '' %>>Active</option>
-                                                        <option value="inactive" <%= user.status === 'inactive' ? 'selected' : '' %>>Inactive</option>
-                                                        <option value="suspended" <%= user.status === 'suspended' ? 'selected' : '' %>>Suspended</option>
-                                                    </select>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Change Status</button>
+                                            <form action="/changeStatus/<%= user.id %>" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                <button type="submit" class="btn <%= user.status === 'active' ? 'btn-danger' : 'btn-success' %>">
+                                                    <%= user.status === 'active' ? 'Deactivate' : 'Activate' %>
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
