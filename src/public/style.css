@@ -122,3 +122,38 @@ footer p {
     margin: 0;
     font-size: 0.9rem;
 }
+/* Custom styles for admin options */
+.admin-options {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+.admin-options h2 {
+    margin-bottom: 10px;
+}
+
+.admin-options ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.admin-options li {
+    margin-bottom: 8px;
+}
+
+.admin-options a {
+    display: block;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.admin-options a:hover {
+    background-color: #f0f0f0;
+}

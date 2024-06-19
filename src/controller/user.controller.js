@@ -30,15 +30,16 @@ export default class User{
         try {
           // Find user by email
           const user = await UserList.findOne({ username });
-          console.log(user);
+          
       
           if (!user) {
             return res.status(404).json({ message: 'User not found' });
           }
       
           // Compare passwords
-          const isMatch = await bcrypt.compare(password, UserList.password);
-      
+          const isMatch = await bcrypt.compare(password, user.password);
+          
+          
           if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
           }
