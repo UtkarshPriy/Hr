@@ -29,8 +29,9 @@ export default class User{
     addsubAdminpage = (req,res)=>{
         res.status(200).render("add_sub_admin");
     }
-    updatesubAdminpage = (req,res)=>{
-        res.status(200).render("update_sub_admin");
+    updatesubAdminpage = async(req,res)=>{
+        const sub_admin_list = await UserList.find({role:"sub_admin"});
+        res.status(200).render("update_sub_admin",{users:sub_admin_list});
 
     }
     addsubAdmin = async(req,res)=>{

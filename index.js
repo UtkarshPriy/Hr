@@ -45,11 +45,8 @@ const authCntrl = new Authicate();
 // Routes
 app.get('/',userCntrl.home);
 app.get('/signIn',userCntrl.signin);
-// app.post('/userlogin',userCntrl.loginAdmin);
-
 app.post('/userlogin',authCntrl.defineUser);
 app.post('/addAdmin',userCntrl.addAdmin);
-// app.post('/adminlogin',userCntrl.loginAdmin);
 app.get('/addsubadmin',userCntrl.addsubAdminpage);
 app.get("/updatesubAdmin",userCntrl.updatesubAdminpage);
 app.post("/addsubadmin",userCntrl.addsubAdmin);
