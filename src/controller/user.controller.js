@@ -72,11 +72,11 @@ export default class User{
             const updatedUser = await  UserList.findOneAndUpdate({ email: email }, { status }, { new: true });
             const sub_admin_list = await UserList.find({role:"sub_admin"});
             req.flash('message', 'Status Updated');
-            return res.render('update_sub_admin',{ message: req.flash('message') },{users:sub_admin_list});
+            return res.render('update_sub_admin',{ message: req.flash('message'), users:sub_admin_list});
         }catch(error){
             console.log(error);
             req.flash('message', 'Unable to Update');
-            return res.render('update_sub_admin',{ message: req.flash('message') },{users:sub_admin_list});
+            return res.render('update_sub_admin',{ message: req.flash('message'), users:sub_admin_list});
         }
         
 
