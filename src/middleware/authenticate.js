@@ -27,9 +27,10 @@ export default class Authicate{
           // Generate JWT token
           const token = jwt.sign({ email:email, passcode:password, role:user.role, status: user.status }, privateKey, { expiresIn: '1h' });
           if(user.role ==='admin'){
+            req.flash('message', 'Logged in as Admin');
             return res.cookie('jwt', token, {
                 httpOnly: true
-            }).status(200).render('admin_welcome');
+            }).status(200).redirect('/admin');
           }
           else if(user.role ==='sub_admin'){
             return res.cookie('jwt', token, {

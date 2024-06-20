@@ -34,6 +34,10 @@ export default class User{
         res.status(200).render("update_sub_admin",{users:sub_admin_list});
 
     }
+    adminpage = async(req,res)=>{
+        const sub_admin_list = await UserList.find({role:"sub_admin"});
+        res.status(200).render("admin_welcome",{users:sub_admin_list});
+    }
     addsubAdmin = async(req,res)=>{
         try{
             const token = req.cookies['jwt'];

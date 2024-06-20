@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/style.css">   
 </head>
 <body>
+    <% if (typeof message !== 'undefined' && message.length > 0) { %>
+        <div class="alert alert-info">
+            <%- message %>
+        </div>
+        <% } %>
     <header>
         <div class="logo-container">
             <img src="/logo-small.png" alt="HR Covered Logo" class="logo">
