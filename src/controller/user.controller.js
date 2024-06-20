@@ -1,4 +1,5 @@
 import UserList from '../model/user.model.js';
+import Organization from '../model/organization.model.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import flash from 'connect-flash';
@@ -94,6 +95,14 @@ export default class User{
         try{
             const owner_list = await UserList.find({role:"owner"});
             res.status(200).render("update_owner",{users:owner_list});
+        }catch(error){
+            console.log(error);
+        }
+    };
+    createOwnerpage = async(req,res)=>{
+        try{
+            const org_list = await Organization.find({},'name');
+            res.status(200).render("create_owner",{organizations:org_list});
         }catch(error){
             console.log(error);
         }
