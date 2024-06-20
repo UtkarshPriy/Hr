@@ -1,71 +1,91 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import validator from 'validator';
+import libphonenumber from 'google-libphonenumber';
 
-const organizationSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
+
+// Define the organization schema
+const organizationSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'Organization name is required'],
-    unique: true,
+    required: [true, 'Name is required'],
     trim: true,
-    maxlength: [255, 'Organization name must be at most 255 characters long']
+    maxlength: [100, 'Name must be at most 100 characters long']
   },
   address: {
     type: String,
-    required: [true, 'Organization address is required'],
-    trim: true
+    required: [true, 'Address is required'],
+    trim: true,
+    maxlength: [200, 'Address must be at most 200 characters long']
   },
   primaryOwner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Assuming a User model exists for primary owners
+    ref: 'User',
     required: [true, 'Primary owner is required']
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Assuming a User model exists for creators
+    ref: 'User',
     required: [true, 'Creator is required']
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true,
+    lowercase: true,
+    trim: true,
+    validate: [validator.isEmail, 'Please enter a valid email']
   },
   phoneNo: {
     type: String,
-    trim: true,
-    maxlength: [20, 'Phone number must be at most 20 characters long']
+    required: [true, 'Phone number is required'],
+    validate: {
+      validator: function(v) {
+        try {
+          const phoneNumber = phoneUtil.parseAndKeepRawInput(v);
+          return phoneUtil.isValidNumber(phoneNumber);
+        } catch (error) {
+          return false;
+        }
+      },
+      message: props => `${props.value} is not a valid phone number`
+    }
   },
   status: {
     type: String,
     enum: ['active', 'inactive', 'suspended'],
-    default: 'active'
+    default: 'active',
+    required: [true, 'Status is required']
   },
   plan: {
     type: String,
-    required: [true, 'Plan is required'],
-    trim: true
+    enum: ['basic', 'premium', 'enterprise'],
+    required: [true, 'Plan is required']
   },
-  handler: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Assuming a User model exists for handlers
+  expiresOn: {
+    type: Date,
+    required: [true, 'Expiration date is required']
   },
   lastUpdated: {
     type: Date,
     default: Date.now
   },
   lastUpdatedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Assuming a User model exists for last updaters
+    type: String,
+    required: [true, 'Last updated by is required'],
+    trim: true,
+    default: 'null'
   }
-}, { timestamps: true });
-
-// Indexes for faster queries
-organizationSchema.index({ name: 1 });
-
-// Error handling middleware for unique constraint
-organizationSchema.post('save', function(error, doc, next) {
-  if (error.name === 'MongoError' && error.code === 11000) {
-    next(new Error('Organization name must be unique'));
-  } else {
-    next();
-  }
+}, {
+  timestamps: true // Automatically add createdAt and updatedAt fields
 });
 
+// Indexes for faster querying (optional)
+organizationSchema.index({ name: 1 });
+organizationSchema.index({ status: 1 });
+
+// Create the organization model
 const Organization = mongoose.model('Organization', organizationSchema);
 
 export default Organization;
-
-// module.exports = Organization;

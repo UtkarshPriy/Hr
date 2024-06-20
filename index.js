@@ -60,6 +60,9 @@ app.get('/logout',authCntrl.signOut);
 app.post('/changeStatus',userCntrl.updateUserStatus);
 
 
+app.get('/subadmin',userCntrl.subadminpage);
+
+
 
 
 

@@ -35,8 +35,8 @@ export default class Authicate{
           else if(user.role ==='sub_admin'){
             return res.cookie('jwt', token, {
                 httpOnly: true
-            }).status(200).render('admin_welcome');
-          }
+            }).status(200).redirect('/subadmin');
+          }   
           
         } catch (error) {
           console.error(error);
