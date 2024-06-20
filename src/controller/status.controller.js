@@ -36,3 +36,7 @@ export const updateOwnerStatus = async(req,res)=>{
     
 
 };
+
+
+
+// Posibility to add lastupdatedby to above

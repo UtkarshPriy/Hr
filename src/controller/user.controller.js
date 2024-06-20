@@ -9,7 +9,6 @@ const privateKey = process.env.JWT_SECRET || "Utkarsh";
 export default class User{
 
     home= (req,res)=>{
-        // res.status(200).render('create_organization'); //Testing
         res.status(200).render('welcome');
     }
     signin = (req,res)=>{
@@ -96,7 +95,7 @@ export default class User{
     createOwner = async(req,res)=>{
         try{
             const token = req.cookies['jwt'];
-            const{username,email,password,organizationName} = req.body;
+            const{username,email,password,organizationName} = req.body;                 
             // Add already exists check
             const userExists = await UserList.findOne({email});
             if(userExists){
