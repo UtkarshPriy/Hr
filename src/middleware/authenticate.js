@@ -14,16 +14,15 @@ export default class Authicate{
           if (!user) {
             console.log("user");
             req.flash('message', 'User not found');
-            return res.render('login',{ message: req.flash('message') });
+            return res.redirect('/signIn');
           }
           // Compare passwords
           const isMatch = await bcrypt.compare(password, user.password);
-          
-          
           if (!isMatch) {
             req.flash('message', 'Invalid credentials');
-            return res.render('login',{ message: req.flash('message') });
-          }
+            return res.redirect('/signIn');
+        };
+        
       
           // Generate JWT token
           const token = jwt.sign({ email:email, passcode:password, role:user.role, status: user.status }, privateKey, { expiresIn: '1h' });
