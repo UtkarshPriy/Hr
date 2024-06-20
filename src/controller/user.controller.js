@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import flash from 'connect-flash';
 
-const privateKey = process.env.JWT_SECRET || "Utkarsh"
+const privateKey = process.env.JWT_SECRET || "Utkarsh";
 
 export default class User{
 
@@ -54,7 +54,7 @@ export default class User{
                 return res.render('add_sub_admin',{ message: req.flash('message') });
             }
             const decoded = jwt.verify(token, privateKey);
-            const updatedby = decoded.name;
+            const updatedby = decoded.email;
 
             
 
@@ -106,6 +106,40 @@ export default class User{
         }catch(error){
             console.log(error);
         }
-    }
+    };
+
+    createOwner = async(req,res)=>{
+        try{
+            const token = req.cookies['jwt'];
+            const{username,email,password,organizationName} = req.body;
+            // Add already exists check
+            const userExists = await UserList.findOne({email});
+            if(userExists){
+                const org_list = await Organization.find({},'name');
+                req.flash('message', 'Email Already Registered');
+                return res.render('create_owner',{organizations:org_list, message: req.flash('message') });
+            }
+            const decoded = jwt.verify(token, privateKey);
+            const updatedby = decoded.email;
+
+            
+
+            let newOwner = {
+                username:username,
+                email:email,
+                password:password,
+                role:"owner",
+                lastUpdatedBy: updatedby,
+                organizationName: 'organizationName'
+            };
+            await UserList.create(newOwner);
+            req.flash('message', 'Owner Created');
+            return res.render('create_owner',{ message: req.flash('message') });
+        }catch(error){
+            console.log(error);
+            res.status(401).redirect('/');
+            
+        }
+    };
 
 }

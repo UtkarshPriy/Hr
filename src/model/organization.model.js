@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
-import libphonenumber from 'google-libphonenumber';
+// import libphonenumber from 'google-libphonenumber';
 
 const { Schema } = mongoose;
-const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
+// const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
 
 // Define the organization schema
 const organizationSchema = new Schema({
@@ -20,13 +20,13 @@ const organizationSchema = new Schema({
     maxlength: [200, 'Address must be at most 200 characters long']
   },
   primaryOwner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
+    trim: true,
     required: [true, 'Primary owner is required']
   },
   creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
+    trim: true,
     required: [true, 'Creator is required']
   },
   email: {
@@ -40,17 +40,17 @@ const organizationSchema = new Schema({
   phoneNo: {
     type: String,
     required: [true, 'Phone number is required'],
-    validate: {
-      validator: function(v) {
-        try {
-          const phoneNumber = phoneUtil.parseAndKeepRawInput(v);
-          return phoneUtil.isValidNumber(phoneNumber);
-        } catch (error) {
-          return false;
-        }
-      },
-      message: props => `${props.value} is not a valid phone number`
-    }
+    // validate: {
+    //   validator: function(v) {
+    //     try {
+    //       const phoneNumber = phoneUtil.parseAndKeepRawInput(v);
+    //       return phoneUtil.isValidNumber(phoneNumber);
+    //     } catch (error) {
+    //       return false;
+    //     }
+    //   },
+    //   message: props => `${props.value} is not a valid phone number`
+    // }
   },
   status: {
     type: String,
@@ -60,7 +60,7 @@ const organizationSchema = new Schema({
   },
   plan: {
     type: String,
-    enum: ['basic', 'premium', 'enterprise'],
+    enum: ['Basic', 'Premium', 'Enterprise'],
     required: [true, 'Plan is required']
   },
   renewDate: {

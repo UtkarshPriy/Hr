@@ -63,7 +63,10 @@ app.post('/changeStatus',userCntrl.updateUserStatus);
 
 app.get('/subadmin',userCntrl.subadminpage);
 app.get('/createOrganization',orgCntrl.createOrgpage);
+app.post('/createOrganization',orgCntrl.createOrg);
 app.get('/addOwner',userCntrl.createOwnerpage);
+app.post('/addOwner',userCntrl.createOwner);
+
 app.get("/updateOwner",userCntrl.updateOwnerpage);
 
 
