@@ -62,7 +62,8 @@ export default class User{
                 email:email,
                 password:password,
                 role:"sub_admin",
-                lastUpdatedBy: updatedby
+                lastUpdatedBy: updatedby,
+                organizationName: 'HRCovered'
             };
             await UserList.create(newSubsdmin);
             req.flash('message', 'Sub admin Created');
@@ -92,7 +93,7 @@ export default class User{
     updateOwnerpage = async(req,res)=>{
         try{
             const owner_list = await UserList.find({role:"owner"});
-            res.status(200).render("update_sub_admin",{users:owner_list});
+            res.status(200).render("update_owner",{users:owner_list});
         }catch(error){
             console.log(error);
         }
