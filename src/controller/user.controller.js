@@ -75,22 +75,7 @@ export default class User{
         }
     };
 
-    updateUserStatus = async(req,res)=>{
-        try{
-            // Add last Updated By
-            const { email,status } = req.body;
-            const updatedUser = await  UserList.findOneAndUpdate({ email: email }, { status }, { new: true });
-            const sub_admin_list = await UserList.find({role:"sub_admin"});
-            req.flash('message', 'Status Updated');
-            return res.render('update_sub_admin',{ message: req.flash('message'), users:sub_admin_list});
-        }catch(error){
-            console.log(error);
-            req.flash('message', 'Unable to Update');
-            return res.render('update_sub_admin',{ message: req.flash('message'), users:sub_admin_list});
-        }
-        
-
-    };
+    
     updateOwnerpage = async(req,res)=>{
         try{
             const owner_list = await UserList.find({role:"owner"});
@@ -130,11 +115,12 @@ export default class User{
                 password:password,
                 role:"owner",
                 lastUpdatedBy: updatedby,
-                organizationName: 'organizationName'
+                organizationName: organizationName
             };
             await UserList.create(newOwner);
+            const org_list = await Organization.find({},'name');
             req.flash('message', 'Owner Created');
-            return res.render('create_owner',{ message: req.flash('message') });
+            return res.render('create_owner',{ message: req.flash('message'),organizations:org_list });
         }catch(error){
             console.log(error);
             res.status(401).redirect('/');

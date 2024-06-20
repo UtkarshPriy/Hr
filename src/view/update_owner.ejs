@@ -53,7 +53,7 @@
                                         <td><%= user.username %></td>
                                         <td><%= user.email %></td>
                                         <td>
-                                            <form action="/changeStatus" method="POST">
+                                            <form action="/changeStatusowner" method="POST">
                                                 <input type="hidden" name="email" value="<%= user.email %>"> <!-- Hidden input for user email -->
                                                 <div class="form-group">
                                                     <select class="form-control" name="status">

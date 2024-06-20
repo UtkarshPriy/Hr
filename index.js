@@ -12,6 +12,7 @@ import session from 'express-session';
 import flash from 'connect-flash';
 import Authicate from './src/middleware/authenticate.js';
 import * as orgCntrl from './src/controller/organization.controller.js';
+import * as statusCntrl from './src/controller/status.controller.js';
 
 
 
@@ -58,7 +59,7 @@ app.get('/addsubadmin',userCntrl.addsubAdminpage);
 app.get("/updatesubAdmin",userCntrl.updatesubAdminpage);
 app.post("/addsubadmin",userCntrl.addsubAdmin);
 app.get('/logout',authCntrl.signOut);
-app.post('/changeStatus',userCntrl.updateUserStatus);
+app.post('/changeStatusubadmin',statusCntrl.updateSubadminStatus);
 
 
 app.get('/subadmin',userCntrl.subadminpage);
@@ -68,6 +69,8 @@ app.get('/addOwner',userCntrl.createOwnerpage);
 app.post('/addOwner',userCntrl.createOwner);
 
 app.get("/updateOwner",userCntrl.updateOwnerpage);
+app.post('/changeStatusowner',statusCntrl.updateOwnerStatus);
+
 
 
 
