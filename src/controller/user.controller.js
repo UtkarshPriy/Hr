@@ -8,7 +8,8 @@ const privateKey = process.env.JWT_SECRET || "Utkarsh"
 export default class User{
 
     home= (req,res)=>{
-        res.status(200).render('welcome');
+        res.status(200).render('create_organization'); //Testing
+        // res.status(200).render('welcome');
     }
     signin = (req,res)=>{
         res.status(200).render('login');

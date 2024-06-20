@@ -63,9 +63,9 @@ const organizationSchema = new Schema({
     enum: ['basic', 'premium', 'enterprise'],
     required: [true, 'Plan is required']
   },
-  expiresOn: {
+  renewDate: {
     type: Date,
-    required: [true, 'Expiration date is required']
+    required: [true, 'Renewal date is required']
   },
   lastUpdated: {
     type: Date,
