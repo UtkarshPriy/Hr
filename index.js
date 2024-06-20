@@ -11,6 +11,7 @@ import methodOverride from 'method-override';
 import session from 'express-session';
 import flash from 'connect-flash';
 import Authicate from './src/middleware/authenticate.js';
+import * as orgCntrl from './src/controller/organization.controller.js';
 
 
 
@@ -61,6 +62,12 @@ app.post('/changeStatus',userCntrl.updateUserStatus);
 
 
 app.get('/subadmin',userCntrl.subadminpage);
+app.get('/createOrganization',orgCntrl.createOrgpage);
+app.get('/addOwner',orgCntrl.createOrgpage);
+app.get("/updateOwner",userCntrl.updateOwnerpage);
+
+
+
 
 
 

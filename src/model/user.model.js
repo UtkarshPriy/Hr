@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import  validator  from 'validator';
+import validator from 'validator';
 
 const { Schema } = mongoose;
 
@@ -26,7 +26,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters long'],
-    select: true
+    select: true // To Ensure password is not selected by default set it to false
   },
   role: {
     type: String,
@@ -37,6 +37,11 @@ const userSchema = new Schema({
     type: String,
     enum: ['active', 'inactive', 'suspended'],
     default: 'active'
+  },
+  organizationName: {
+    type: String,
+    trim: true,
+    default: null
   },
   lastUpdated: {
     type: Date,
