@@ -37,6 +37,23 @@ export const updateOwnerStatus = async(req,res)=>{
 
 };
 
+export const updateEmployeeStatus = async(req,res)=>{
+    try{
+        // Add last Updated By
+        const { email,status } = req.body;
+        const updatedUser = await  UserList.findOneAndUpdate({ email: email }, { status }, { new: true });
+        const employee_list = await UserList.find({role:"employee"});
+        req.flash('message', 'Status Updated');
+        return res.render('update_employee',{ message: req.flash('message'), users:employee_list});
+    }catch(error){
+        console.log(error);
+        req.flash('message', 'Unable to Update');
+        return res.render('update_employee',{ message: req.flash('message'), users:employee_list});
+    }
+    
+
+};
+
 
 
 // Posibility to add lastupdatedby to above

@@ -77,7 +77,9 @@ app.post('/changeStatusowner',statusCntrl.updateOwnerStatus);
 app.get('/owner',userCntrl.ownerpage);
 app.get('/addEmployee',userCntrl.addEmployeepage);
 app.post('/addEmployee',userCntrl.createEmployee);
-// app.get('/createEmployee',userCntrl.employeepage);
+app.get('/updateEmployee',userCntrl.updateEmployeepage); 
+app.post('/changeStatusemployee',statusCntrl.updateEmployeeStatus);
+
 
 
 

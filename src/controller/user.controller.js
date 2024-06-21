@@ -9,6 +9,7 @@ const privateKey = process.env.JWT_SECRET || "Utkarsh";
 export default class User{
 
     home= (req,res)=>{
+        // res.status(200).render('upload_doc_by_owner');  Testing
         res.status(200).render('welcome');
     }
     signin = (req,res)=>{
@@ -35,6 +36,10 @@ export default class User{
         const sub_admin_list = await UserList.find({role:"sub_admin"});
         res.status(200).render("update_sub_admin",{users:sub_admin_list});
 
+    };
+    updateEmployeepage = async(re,res)=>{
+        const employee_list = await UserList.find({role:"employee"});
+        res.status(200).render("update_employee",{users:employee_list});
     };
     adminpage = async(req,res)=>{
         // const sub_admin_list = await UserList.find({role:"sub_admin"});,{users:sub_admin_list}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document - HR Covered</title>
+    <link rel="stylesheet" href="/style.css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <% if (typeof message !== 'undefined' && message.length > 0) { %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <%- message %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+
+    <header>
+        <div class="logo-container">
+            <img src="/logo-small.png" alt="HR Covered Logo" class="logo">
+        </div>
+        <h1>Upload Document</h1>
+        <p>Attach a document from your local machine.</p>
+        <a href="/logout" class="logout-link">Logout</a> <!-- Logout link in top right corner -->
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="/updateOwner">Update Owner</a></li>
+            <li><a href="/addOwner">Add Owner</a></li>
+            <li><a href="/createOrganization">Create Organization</a></li>
+        </ul>
+    </nav>
+
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3>Attach Document</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/uploadDocument" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="documentName">Document Name</label>
+                                <input type="text" class="form-control" id="documentName" name="documentName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="document">Select Document</label>
+                                <input type="file" class="form-control" id="document" name="document" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 HR Covered. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies (Optional if you are using Bootstrap for styling) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script
