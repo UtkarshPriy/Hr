@@ -9,8 +9,15 @@ const privateKey = process.env.JWT_SECRET || "Utkarsh";
 export default class User{
 
     home= (req,res)=>{
-        // res.status(200).render('upload_doc_by_owner');  Testing
-        res.status(200).render('welcome');
+        const documents = [
+            { id: 1, name: 'Document 1' },
+            { id: 2, name: 'Document 2' },
+            { id: 3, name: 'Document 3' }
+        ];
+
+        res.status(200).render('upload_doc_by_owner');
+        // res.status(200).render('signdoc',{documents:documents});  
+        // res.status(200).render('welcome');
     }
     signin = (req,res)=>{
         res.status(200).render('login');

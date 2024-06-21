@@ -1,0 +1,38 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.set('view engine', 'ejs');
+
+// Sample documents array
+const documents = [
+    { id: 1, name: 'Document 1' },
+    { id: 2, name: 'Document 2' },
+    { id: 3, name: 'Document 3' }
+];
+
+app.get('/signDocument', (req, res) => {
+    res.render('signDocument', { documents: documents, message: '' });
+});
+
+app.post('/signDocument', (req, res) => {
+    const { documentId, name, location, reason, contact, datetime } = req.body;
+    // Handle the form submission logic
+    console.log('Document Signed:', { documentId, name, location, reason, contact, datetime });
+    res.render('signDocument', { documents: documents, message: 'Document signed successfully!' });
+});
+
+app.post('/rejectSign', (req, res) => {
+    const { documentId } = req.body;
+    // Handle the rejection logic
+    console.log('Document Rejected:', documentId);
+    res.json({ message: 'Document rejected successfully' });
+});
+
+// Start the server
+app.listen(3000, () => {
+    console.log('Server started on http://localhost:3000');
+});

@@ -3,16 +3,21 @@ import "./env.js";
 import express from 'express';
 import { urlencoded } from 'express';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 import User from './src/controller/user.controller.js';
 import db from './src/config/mongoose.config.js';
 import ejs from 'ejs';
 import methodOverride from 'method-override';
 import session from 'express-session';
 import flash from 'connect-flash';
+import path from 'path';
+import AWS from 'aws-sdk';
+import fs from 'fs';
+import multer from 'multer';
+
 import Authicate from './src/middleware/authenticate.js';
 import * as orgCntrl from './src/controller/organization.controller.js';
 import * as statusCntrl from './src/controller/status.controller.js';
+import * as docCntrl from './src/controller/document.cntroller.js';
 
 
 
@@ -82,6 +87,10 @@ app.post('/changeStatusemployee',statusCntrl.updateEmployeeStatus);
 
 
 
+
+app.get('/uploadDoc',docCntrl.uploadDocument);
+const upload = multer({ dest: 'uploads/' }); // Temporary storage
+app.post('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
 
 
 

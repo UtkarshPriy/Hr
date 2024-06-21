@@ -1,74 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change User Status - HR Covered</title>
-    <link rel="stylesheet" href="/style.css">
-    <!-- Bootstrap CSS (Optional if you want to use Bootstrap for styling) -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <% if (typeof message !== 'undefined' && message.length > 0) { %>
-        <div class="alert alert-info ">
-            <%- message %>
-        </div>
-        <% } %>
-    <header>
-        <div class="logo-container">
-            <img src="/logo-small.png" alt="HR Covered Logo" class="logo">
-        </div>
-        <h1>Welcome to HR Covered</h1>
-        <p>Your one-stop solution for HR management.</p>
-        <a href="/logout" class="logout-link">Logout</a> <!-- Logout link in top right corner -->
-    </header>
-    <main class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h3>Change User Status</h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% users.forEach(user => { %>
-                                    <tr>
-                                        <td><%= user.username %></td>
-                                        <td><%= user.email %></td>
-                                        <td><%= user.status %></td>
-                                        <td>
-                                            <form action="/changeStatus/<%= user.id %>" method="POST">
-                                                <input type="hidden" name="_method" value="PUT">
-                                                <button type="submit" class="btn <%= user.status === 'active' ? 'btn-danger' : 'btn-success' %>">
-                                                    <%= user.status === 'active' ? 'Deactivate' : 'Activate' %>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <footer class="text-center mt-5">
-        <p>&copy; 2024 HR Covered. All rights reserved.</p>
-    </footer>
+const express = require('express');
+const { PDFDocument, rgb } = require('pdf-lib');
+const fs = require('fs');
+const app = express();
 
-    <!-- Bootstrap JS and dependencies (Optional if you are using Bootstrap for styling) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+app.use(express.json());
+
+app.post('/sign-pdf', async (req, res) => {
+    const { name, location, reason, contact, timestamp, signatureImage } = req.body;
+
+    try {
+        // Load an existing PDF or create a new one
+        const pdfDoc = await PDFDocument.create();
+        const page = pdfDoc.addPage([600, 400]);
+
+        // Add signature details to the PDF
+        page.drawText(`Name: ${name}`, { x: 50, y: 350, size: 12 });
+        page.drawText(`Location: ${location}`, { x: 50, y: 330, size: 12 });
+        page.drawText(`Reason: ${reason}`, { x: 50, y: 310, size: 12 });
+        page.drawText(`Contact Information: ${contact}`, { x: 50, y: 290, size: 12 });
+        page.drawText(`Date and Time: ${timestamp}`, { x: 50, y: 270, size: 12 });
+
+        // Add the signature image to the PDF
+        if (signatureImage) {
+            const signatureBytes = fs.readFileSync(signatureImage);
+            const signatureImageEmbed = await pdfDoc.embedPng(signatureBytes);
+            const signatureDims = signatureImageEmbed.scale(0.5);
+            page.drawImage(signatureImageEmbed, {
+                x: 50,
+                y: 200,
+                width: signatureDims.width,
+                height: signatureDims.height,
+            });
+        }
+
+        // Save the PDF to a file or return it as a response
+        const pdfBytes = await pdfDoc.save();
+        fs.writeFileSync('signed_document.pdf', pdfBytes);
+
+        res.send('PDF signed successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while signing the PDF');
+    }
+});
+
+app.listen(3000, () => {
+    console.log('Server started on http://localhost:3000');
+});
