@@ -29,19 +29,26 @@ export default class User{
 
     addsubAdminpage = (req,res)=>{
         res.status(200).render("add_sub_admin");
-    }
+    };
+    
     updatesubAdminpage = async(req,res)=>{
         const sub_admin_list = await UserList.find({role:"sub_admin"});
         res.status(200).render("update_sub_admin",{users:sub_admin_list});
 
-    }
+    };
     adminpage = async(req,res)=>{
-        const sub_admin_list = await UserList.find({role:"sub_admin"});
-        res.status(200).render("admin_welcome",{users:sub_admin_list});
-    }
+        // const sub_admin_list = await UserList.find({role:"sub_admin"});,{users:sub_admin_list}
+        res.status(200).render("admin_welcome");
+    };
     subadminpage = (req,res)=>{
         res.status(200).render("sub_admin_welcome");
-    }
+    };
+    ownerpage = (req,res)=>{
+        res.status(200).render("owner_welcome");
+    };
+    // employeepage =(req,res)=>{
+    //     res.status(200).render("owner_welcome");
+    // };
     addsubAdmin = async(req,res)=>{
         try{
             const token = req.cookies['jwt'];
@@ -85,11 +92,15 @@ export default class User{
     };
     createOwnerpage = async(req,res)=>{
         try{
-            const org_list = await Organization.find({},'name');
+            const org_list = await Organization.find({},'name');  // Required for drop down of Org. List
             res.status(200).render("create_owner",{organizations:org_list});
         }catch(error){
             console.log(error);
         }
+    };
+    addEmployeepage = (req,res)=>{
+
+        res.status(200).render("create_employee");
     };
 
     createOwner = async(req,res)=>{
@@ -120,6 +131,39 @@ export default class User{
             const org_list = await Organization.find({},'name');
             req.flash('message', 'Owner Created');
             return res.render('create_owner',{ message: req.flash('message'),organizations:org_list });
+        }catch(error){
+            console.log(error);
+            res.status(401).redirect('/');
+            
+        }
+    };
+    createEmployee = async(req,res)=>{
+        try{
+            const token = req.cookies['jwt'];
+            const{username,email,password} = req.body;                 
+            // Add already exists check
+            const userExists = await UserList.findOne({email});
+            if(userExists){
+                req.flash('message', 'Email Already Registered');
+                return res.render('create_owner');
+            }
+            const decoded = jwt.verify(token, privateKey);
+            const updatedby = decoded.email;
+            const organizationName = decoded.organizationName;  // employee has same organizationName as of owner
+
+            
+
+            let newEmployee = {
+                username:username,
+                email:email,
+                password:password,
+                role:"employee",
+                lastUpdatedBy: updatedby,
+                organizationName: organizationName
+            };
+            await UserList.create(newEmployee);
+            req.flash('message', 'Employee Created');
+            return res.render('create_employee',{ message: req.flash('message')});
         }catch(error){
             console.log(error);
             res.status(401).redirect('/');

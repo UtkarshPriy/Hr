@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User - HR Covered</title>
+    <link rel="stylesheet" href="/style.css">
+    <!-- Bootstrap CSS (Optional if you want to use Bootstrap for styling) -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <% if (typeof message !== 'undefined' && message.length > 0) { %>
+        <div class="alert alert-info ">
+            <%- message %>
+        </div>
+    <% } %>
+    <header>
+        <div class="logo-container">
+            <img src="/logo-small.png" alt="HR Covered Logo" class="logo">
+        </div>
+        <h1>New User</h1>
+        <p>Your one-stop solution for HR management.</p>
+        <a href="/logout" class="logout-link">Logout</a> <!-- Logout link in top right corner -->
+    </header>
+  
+    <nav>
+        <ul>
+            <li><a href="/addEmployee">Add Employee</a></li>
+            <li><a href="/addOwner">Update Employee</a></li>
+            <li><a href="/createOrganization">Upload Doc</a></li>
+            <li><a href="/createOrganization">Doc Status</a></li>
+
+        </ul>
+    </nav>
+
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3>Add New Employee</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/addEmployee" method="POST">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required minlength="3" maxlength="30">
+                                <small class="form-text text-muted">Username must be between 3 and 30 characters long.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" minlength="8" required>
+                                <small class="form-text text-muted">Password must be at least 8 characters long.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                <small class="form-text text-muted">Please enter a valid email address.</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Add User</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 HR Covered. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies (Optional if you are using Bootstrap for styling) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

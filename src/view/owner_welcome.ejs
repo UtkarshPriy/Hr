@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Admin Panel - HR Covered</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <% if (typeof message !== 'undefined' && message.length > 0) { %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <%- message %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+    
+    <header>
+        <div class="logo-container">
+            <img src="/logo-small.png" alt="HR Covered Logo" class="logo">
+        </div>
+        <h1>Welcome, Owner!</h1>
+        <p>Choose an option below:</p>
+        <a href="/logout" class="logout-link">Logout</a> <!-- Logout link in top right corner -->
+    </header>
+  
+    <nav>
+        <ul>
+            <li><a href="/addEmployee">Add Employee</a></li>
+            <li><a href="/addOwner">Update Employee</a></li>
+            <li><a href="/createOrganization">Upload Doc</a></li>
+            <li><a href="/createOrganization">Doc Status</a></li>
+
+        </ul>
+    </nav>
+
+    <main class="container mt-5">
+        <section class="sub-admin-options" style="height: 200px;">
+            <!-- White space -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 HR Covered. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies (Optional if you are using Bootstrap for styling) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

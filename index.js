@@ -50,6 +50,8 @@ const userCntrl = new User();
 const authCntrl = new Authicate();
 
 // Routes
+
+// Admin
 app.get('/',userCntrl.home);
 app.get('/signIn',userCntrl.signin);
 app.post('/userlogin',authCntrl.defineUser);
@@ -61,7 +63,7 @@ app.post("/addsubadmin",userCntrl.addsubAdmin);
 app.get('/logout',authCntrl.signOut);
 app.post('/changeStatusubadmin',statusCntrl.updateSubadminStatus);
 
-
+// subadmin
 app.get('/subadmin',userCntrl.subadminpage);
 app.get('/createOrganization',orgCntrl.createOrgpage);
 app.post('/createOrganization',orgCntrl.createOrg);
@@ -71,6 +73,11 @@ app.post('/addOwner',userCntrl.createOwner);
 app.get("/updateOwner",userCntrl.updateOwnerpage);
 app.post('/changeStatusowner',statusCntrl.updateOwnerStatus);
 
+// Owner
+app.get('/owner',userCntrl.ownerpage);
+app.get('/addEmployee',userCntrl.addEmployeepage);
+app.post('/addEmployee',userCntrl.createEmployee);
+// app.get('/createEmployee',userCntrl.employeepage);
 
 
 
