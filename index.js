@@ -13,7 +13,6 @@ import path from 'path';
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import multer from 'multer';
-
 import Authicate from './src/middleware/authenticate.js';
 import * as orgCntrl from './src/controller/organization.controller.js';
 import * as statusCntrl from './src/controller/status.controller.js';
@@ -90,7 +89,21 @@ app.post('/changeStatusemployee',statusCntrl.updateEmployeeStatus);
 
 app.get('/uploadDoc',docCntrl.uploadDocument);
 const upload = multer({ dest: 'uploads/' }); // Temporary storage
+// const upload = multer({ storage: multer.memoryStorage() });
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
+
 app.post('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
+app.get('/downloadDocument', docCntrl.downloadDocument);
+
+
+
+
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
+
+// app.post('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
+// console.log('File Object:', file.path); 
 
 
 
