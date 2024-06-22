@@ -94,10 +94,18 @@ const upload = multer({ dest: 'uploads/' }); // Temporary storage
 // const upload = multer({ storage: storage });
 
 app.post('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
+// app.get('/downloadDocument', docCntrl.downloadDocument);
+
+
+
+// Search by document name
+app.get('/searchByDocName', docCntrl.searchDocuments);
+
+// Search by employee email
+app.get('/searchByEmployee', docCntrl.searchDocumentsByEmployee);
+
+// Download document
 app.get('/downloadDocument', docCntrl.downloadDocument);
-
-
-
 
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage: storage });

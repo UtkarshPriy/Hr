@@ -6,6 +6,7 @@ import flash from 'connect-flash';
 import Doc from '../model/document.model.js';
 import { create } from 'domain';
 import jwt from 'jsonwebtoken';
+import DocEmployeeRelation from '../model/docEmployeeRelation.model.js';
 // import DocEmployeeRelation from '../model/docEmployeeRelation.model.js';
 
 const privateKey = process.env.JWT_SECRET || "Utkarsh";
@@ -105,3 +106,58 @@ export const downloadDocument = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+/////////////////
+
+// Search documents by document name
+export const searchDocuments = async (req, res) => {
+    const { docName } = req.query;
+
+    try {
+        const documents = await DocEmployeeRelation.find({ docName: new RegExp(docName, 'i') });
+        res.render('searchResults', { documents, query: docName });
+    } catch (error) {
+        console.error('Error searching documents:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+// Search documents by employee email
+export const searchDocumentsByEmployee = async (req, res) => {
+    const { email } = req.query;
+
+    try {
+        const documents = await DocEmployeeRelation.find({ employee: new RegExp(email, 'i') });
+        res.render('searchResults', { documents, query: email });
+    } catch (error) {
+        console.error('Error searching documents:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+// Download document function
+// export const downloadDocument = async (req, res) => {
+//     try {
+//         const { key } = req.body;
+
+//         const params = {
+//             Bucket: process.env.AWS_BUCKET_NAME,
+//             Key: key,
+//         };
+
+//         s3.getObject(params, (err, data) => {
+//             if (err) {
+//                 console.error('Error downloading from S3:', err);
+//                 res.status(500).send('Error downloading from S3');
+//                 return;
+//             }
+
+//             res.attachment(key); // Sets the filename for the download
+//             res.send(data.Body);
+//         });
+//     } catch (error) {
+//         console.error('Error:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// };

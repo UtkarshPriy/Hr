@@ -3,19 +3,17 @@ import Organization from '../model/organization.model.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import flash from 'connect-flash';
+import Doc from '../model/document.model.js';// remove this
 
 const privateKey = process.env.JWT_SECRET || "Utkarsh";
 
 export default class User{
+    
+    
+    home= async(req,res)=>{
+        const documents = await Doc.find({});
 
-    home= (req,res)=>{
-        const documents = [
-            { id: 1, name: 'Document 1' },
-            { id: 2, name: 'Document 2' },
-            { id: 3, name: 'Document 3' }
-        ];
-
-        res.status(200).render('upload_doc_by_owner');
+        res.status(200).render('send_doc',{documents:documents});
         // res.status(200).render('signdoc',{documents:documents});  
         // res.status(200).render('welcome');
     }

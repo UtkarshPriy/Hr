@@ -26,6 +26,10 @@ const docSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isSent: {
+    type: Boolean,
+    default: false,
+  },
   status: {
     type: String,
     enum: ['active', 'inactive', 'deleted'],
