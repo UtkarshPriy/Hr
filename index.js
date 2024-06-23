@@ -107,14 +107,10 @@ app.get('/searchByEmployee', docCntrl.searchDocumentsByEmployee);
 // Download document
 app.get('/downloadDocument', docCntrl.downloadDocument);
 
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
-
-// app.post('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
-// console.log('File Object:', file.path); 
-
-
-
+app.get('/docStatus',docCntrl.docStatus);
+app.get('/sendDoc',docCntrl.sendDocpage);
+app.post('/sendDoc',docCntrl.sendDoc);
+app.post('/sign-pdf',docCntrl.signedDoc);
 
 
 

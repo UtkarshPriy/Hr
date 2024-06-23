@@ -22,6 +22,11 @@ const docSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  organizationName: {
+    type: String,
+    trim: true,
+    default: null
+  },
   date: {
     type: Date,
     default: Date.now,

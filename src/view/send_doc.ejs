@@ -31,7 +31,7 @@
             <li><a href="/addEmployee">Add Employee</a></li>
             <li><a href="/updateEmployee">Update Employee</a></li>
             <li><a href="/uploadDoc">Upload Doc</a></li>
-            <li><a href="/documents">Doc Status</a></li>
+            <li><a href="/docStatus">Doc Status</a></li>
         </ul>
     </nav>
 
@@ -58,8 +58,10 @@
                                         <td><%= doc.isSent %></td>
                                         <td>
                                             <% if (doc.isSent === false) { %>
-                                                <form action="/send-document" method="POST">
+                                                <form action="/sendDoc" method="POST">
                                                     <input type="hidden" name="id" value="<%= doc._id %>">
+                                                    <input type="hidden" name="owner" value="<%= doc.uploader %>"> <!-- Hidden input for user email -->
+                                                    <input type="hidden" name="organizationName" value="<%= doc.organizationName %>">
                                                     <button type="submit" class="btn btn-primary">Send</button>
                                                 </form>
                                             <% } else { %>
@@ -86,3 +88,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
