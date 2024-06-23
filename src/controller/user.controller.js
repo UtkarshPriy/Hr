@@ -155,7 +155,9 @@ export default class User{
             const userExists = await UserList.findOne({email});
             if(userExists){
                 req.flash('message', 'Email Already Registered');
-                return res.render('create_owner');
+                return res.render('create_employee',{ message: req.flash('message')});
+                // return res.render('create_owner');
+
             }
             const decoded = jwt.verify(token, privateKey);
             const updatedby = decoded.email;
