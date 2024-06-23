@@ -190,14 +190,14 @@ export const sendDoc = async(req,res)=>{
 
 
         const transporter = nodemailer.createTransport({
-            host: 'in-v3.mailjet.com',
+            host: 'smtp-relay.brevo.com',
             port: 587,
+            secure: false, // true for 465, false for other ports
             auth: {
-                user: process.env.MAILJET_API_KEY,
-                pass: process.env.MAILJET_SECRET_KEY,
+                user: process.env.BREVO_USER, // your Brevo email address
+                pass: process.env.BREVO_PASS, // your Brevo SMTP password
             },
         });
-
         // const transporter = nodemailer.createTransport({
         //     host:'smtp.gmail.com',
         //     port: 465,
@@ -210,8 +210,8 @@ export const sendDoc = async(req,res)=>{
 
         // Define the email options
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: 'utkarsh.priy@gmail.com' || emp.email,
+            from: process.env.BREVO_USER,
+            to: 'utkarsh.priy@gmail.com',
             subject: 'Test Email from SignaTrack',
             text: 'You have pending docs to sign.',
         };
