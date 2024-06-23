@@ -8,6 +8,7 @@ import { create } from 'domain';
 import jwt from 'jsonwebtoken';
 import DocEmployeeRelation from '../model/docEmployeeRelation.model.js';
 import UserList from '../model/user.model.js';
+import nodemailer from 'nodemailer';
 // import DocEmployeeRelation from '../model/docEmployeeRelation.model.js';
 
 const privateKey = process.env.JWT_SECRET || "Utkarsh";
@@ -167,28 +168,50 @@ export const sendDoc = async(req,res)=>{
     //     docURL:doc.docURL
     // })));
     const employee_list = await UserList.find({ organizationName: organizationName, role: 'employee', status: 'active' }).lean();
-    const newEntries = employee_list.map(emp => ({
+    const newEntries = employee_list.map(emp => (
+        {
         owner: owner,
         employee: emp.email,
-        docName: doc.docName,
-        key: doc.key,
-        docURL: doc.docURL
+        docName: doc_list.docName,
+        key: doc_list.key,
+        docURL: doc_list.docURL
     }));
     await DocEmployeeRelation.insertMany(newEntries);
     employee_list.flatMap(emp=>{
 
         // Create a transporter using SMTP transport
+        // const transporter = nodemailer.createTransport({
+        //     service: process.env.SERVICE,
+        //     auth: {
+        //       user: process.env.EMAIL_USER,
+        //       pass: process.env.EMAIL_PASSWORD,
+        //     },
+        // });
+
+
         const transporter = nodemailer.createTransport({
-            service: process.env.SERVICE,
+            host: 'in-v3.mailjet.com',
+            port: 587,
             auth: {
-              user: process.env.EMAIL_USER,
-              pass: process.env.EMAIL_PASSWORD,
+                user: process.env.MAILJET_API_KEY,
+                pass: process.env.MAILJET_SECRET_KEY,
             },
         });
+
+        // const transporter = nodemailer.createTransport({
+        //     host:'smtp.gmail.com',
+        //     port: 465,
+        //     secure:true,
+        //     auth:{
+        //         user: process.env.EMAIL_USER,
+        //         pass: process.env.SMTPKEY
+        //     },
+        // });
+
         // Define the email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: emp.email,
+            to: 'utkarsh.priy@gmail.com' || emp.email,
             subject: 'Test Email from SignaTrack',
             text: 'You have pending docs to sign.',
         };
