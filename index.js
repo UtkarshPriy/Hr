@@ -89,9 +89,6 @@ app.post('/changeStatusemployee',statusCntrl.updateEmployeeStatus);
 
 app.get('/uploadDoc',docCntrl.uploadDocument);
 const upload = multer({ dest: 'uploads/' }); // Temporary storage
-// const upload = multer({ storage: multer.memoryStorage() });
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
 
 app.post('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
 // app.get('/downloadDocument', docCntrl.downloadDocument);
@@ -113,6 +110,7 @@ app.post('/sendDoc',docCntrl.sendDoc);
 app.post('/sign-pdf',docCntrl.signedDoc);
 
 
+app.get('/employee',userCntrl.employeepage);
 
 
 

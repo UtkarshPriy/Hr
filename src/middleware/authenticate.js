@@ -41,8 +41,15 @@ export default class Authicate{
             return res.cookie('jwt', token, {
               httpOnly: true
           }).status(200).redirect('/owner');
+          } 
+          else if(user.role ==='employee'){
+            return res.cookie('jwt', token, {
+              httpOnly: true
+          }).status(200).redirect('/employee');
           }   
-          
+          else{
+            redirect('/');
+          }
         } catch (error) {
           console.error(error);
           console.log(error);

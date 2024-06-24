@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import flash from 'connect-flash';
 import Doc from '../model/document.model.js';// remove this
+import DocEmployeeRelation from '../model/docEmployeeRelation.model.js';
 
 const privateKey = process.env.JWT_SECRET || "Utkarsh";
 
@@ -55,6 +56,17 @@ export default class User{
     };
     ownerpage = (req,res)=>{
         res.status(200).render("owner_welcome");
+    };
+    employeepage = async(req,res)=>{
+        try{
+            const token = req.cookies['jwt'];
+            const decoded = jwt.verify(token, privateKey);
+            const email = decoded.email;
+            const doc_list = await DocEmployeeRelation.find({employee:email,status:'pending'});
+            res.status(200).render("signdoc",{documents:doc_list});
+        }catch(error){
+            console.log(error);
+        }
     };
     // employeepage =(req,res)=>{
     //     res.status(200).render("owner_welcome");

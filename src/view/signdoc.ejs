@@ -36,8 +36,8 @@
                     <div class="card-body">
                         <% documents.forEach(function(document, index) { %>
                             <form action="/signDocument" method="POST">
-                                <div class="form-group">
-                                    <label>Document: <strong><%= document.name %></strong></label>
+                                <div class="form-group text-center">
+                                    <label>Document: <strong><%= document.docName %></strong></label>
                                     <a href="<%= document.url %>" class="btn btn-secondary ml-2" download>Download</a>
                                     <input type="hidden" name="documentId" value="<%= document.id %>">
                                 </div>
