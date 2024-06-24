@@ -86,7 +86,7 @@
                                             <td><%= doc.employee %></td>
                                             <td><%= doc.status %></td>
                                             <td>
-                                                <form action="/downloadDocument" method="POST" class="d-inline">
+                                                <form action="/downloadDocument" method="GET" class="d-inline">
                                                     <input type="hidden" name="key" value="<%= doc.key %>">
                                                     <button type="submit" class="btn btn-sm btn-primary">Download</button>
                                                 </form>

@@ -102,7 +102,7 @@ export const downloadDocument = async (req, res) => {
                 return;
             }
 
-            res.attachment(key); // Sets the filename for the download
+            res.attachment(Key); // Sets the filename for the download
             res.send(data.Body);
         });
     } catch (error) {

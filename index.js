@@ -90,7 +90,7 @@ app.post('/changeStatusemployee',statusCntrl.updateEmployeeStatus);
 app.get('/uploadDoc',docCntrl.uploadDocument);
 const upload = multer({ dest: 'uploads/' }); // Temporary storage
 
-app.post('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
+app.get('/uploadDocument', upload.single('document'), docCntrl.uploadDocumentAws);
 // app.get('/downloadDocument', docCntrl.downloadDocument);
 
 

@@ -12,11 +12,11 @@ export default class User{
     
     
     home= async(req,res)=>{
-        const documents = await Doc.find({});
+        // const documents = await Doc.find({});
 
-        res.status(200).render('send_doc',{documents:documents});
+        // res.status(200).render('send_doc',{documents:documents});
         // res.status(200).render('signdoc',{documents:documents});  
-        // res.status(200).render('welcome');
+        res.status(200).render('welcome');
     }
     signin = (req,res)=>{
         res.status(200).render('login');
@@ -68,9 +68,7 @@ export default class User{
             console.log(error);
         }
     };
-    // employeepage =(req,res)=>{
-    //     res.status(200).render("owner_welcome");
-    // };
+    
     addsubAdmin = async(req,res)=>{
         try{
             const token = req.cookies['jwt'];
@@ -83,8 +81,6 @@ export default class User{
             }
             const decoded = jwt.verify(token, privateKey);
             const updatedby = decoded.email;
-
-            
 
             let newSubsdmin = {
                 username:username,
@@ -103,7 +99,6 @@ export default class User{
         }
     };
 
-    
     updateOwnerpage = async(req,res)=>{
         try{
             const owner_list = await UserList.find({role:"owner"});
@@ -112,6 +107,7 @@ export default class User{
             console.log(error);
         }
     };
+    
     createOwnerpage = async(req,res)=>{
         try{
             const org_list = await Organization.find({},'name');  // Required for drop down of Org. List
@@ -120,6 +116,7 @@ export default class User{
             console.log(error);
         }
     };
+    
     addEmployeepage = (req,res)=>{
 
         res.status(200).render("create_employee");
