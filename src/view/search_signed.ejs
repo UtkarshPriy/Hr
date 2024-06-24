@@ -26,14 +26,13 @@
     </header>
     
     <nav>
-        <ul>
+         <ul>
             <li><a href="/addEmployee">Add Employee</a></li>
             <li><a href="/updateEmployee">Update Employee</a></li>
             <li><a href="/uploadDoc">Upload Doc</a></li>
             <li><a href="/docStatus">Doc Status</a></li>
             <li><a href="/sendDoc">Send Docs</a></li>
-
-        </ul>
+        </ul>    
     </nav>
 
     <main class="container mt-5">
@@ -68,7 +67,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header text-center">
-                            <h3>Search Results for "<%= query %>"</h3>
+                       
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
@@ -87,7 +86,10 @@
                                             <td><%= doc.employee %></td>
                                             <td><%= doc.status %></td>
                                             <td>
-                                                <a href="/downloadDocument?key=<%= doc.key %>" class="btn btn-sm btn-primary">Download</a>
+                                                <form action="/downloadDocument" method="POST" class="d-inline">
+                                                    <input type="hidden" name="key" value="<%= doc.key %>">
+                                                    <button type="submit" class="btn btn-sm btn-primary">Download</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     <% }) %>

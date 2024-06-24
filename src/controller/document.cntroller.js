@@ -189,31 +189,31 @@ export const sendDoc = async(req,res)=>{
         // });
 
 
-        const transporter = nodemailer.createTransport({
-            host: 'smtp-relay.brevo.com',
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-                user: process.env.BREVO_USER, // your Brevo email address
-                pass: process.env.BREVO_PASS, // your Brevo SMTP password
-            },
-        });
         // const transporter = nodemailer.createTransport({
-        //     host:'smtp.gmail.com',
-        //     port: 465,
-        //     secure:true,
-        //     auth:{
-        //         user: process.env.EMAIL_USER,
-        //         pass: process.env.SMTPKEY
+        //     host: 'smtp-relay.brevo.com',
+        //     port: 587,
+        //     secure: false, // true for 465, false for other ports
+        //     auth: {
+        //         user: process.env.BREVO_USER, // your Brevo email address
+        //         pass: process.env.BREVO_PASS, // your Brevo SMTP password
         //     },
         // });
+        const transporter = nodemailer.createTransport({
+            host:'smtp.gmail.com',
+            port: 465,
+            secure:true,
+            auth:{
+                user:process.env.EMAIL_USER,
+                pass:process.env.SMTPKEY
+            },
+        });
 
         // Define the email options
         const mailOptions = {
-            from: process.env.BREVO_USER,
+            from:process.env.EMAIL_USER,  //'test@bslhg.com'|| process.env.BREVO_USER,
             to: 'utkarsh.priy@gmail.com',
-            subject: 'Test Email from SignaTrack',
-            text: 'You have pending docs to sign.',
+            subject: 'Pending Docs to acknowledge on SignaTrack',
+            html: '<h1>Hi, please click to review pending docs</h1><p>Click <a href="https://your-link-here.com">here</a> to review the documents.</p>', // HTML body with link
         };
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {
