@@ -16,7 +16,7 @@ const docEmployeeRelationSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  key: {
+  Key: {
     type: String,
     required: true,
     trim: true,
@@ -42,7 +42,7 @@ const docEmployeeRelationSchema = new mongoose.Schema({
 // Adding indexes for better query performance
 docEmployeeRelationSchema.index({ owner: 1 });
 docEmployeeRelationSchema.index({ employee: 1 });
-docEmployeeRelationSchema.index({ key: 1 });
+docEmployeeRelationSchema.index({ Key: 1 });
 
 const DocEmployeeRelation = mongoose.model('DocEmployeeRelation', docEmployeeRelationSchema);
 

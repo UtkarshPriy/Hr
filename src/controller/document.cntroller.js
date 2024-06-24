@@ -68,11 +68,12 @@ export const uploadDocumentAws = (req, res) => {
         const organizationName = decoded.organizationName;
         let newDoc = {
             docName:documentName,
-            key:fileKey,
+            Key:fileKey,
             uploader:owner,
             docURL:fileUrl,
             organizationName:organizationName,
         };
+        
         await Doc.create(newDoc);
      }catch(error){
         console.log(error);
@@ -88,11 +89,11 @@ export const uploadDocumentAws = (req, res) => {
 // Download document function
 export const downloadDocument = async (req, res) => {
     try {
-        const { key } = req.body;
+        const { Key } = req.body;
 
         const params = {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: key,
+            Key: Key,
         };
 
         s3.getObject(params, (err, data) => {
@@ -173,7 +174,7 @@ export const sendDoc = async(req,res)=>{
         owner: owner,
         employee: emp.email,
         docName: doc_list.docName,
-        key: doc_list.key,
+        Key: doc_list.Key,
         docURL: doc_list.docURL
     }));
     await DocEmployeeRelation.insertMany(newEntries);

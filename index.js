@@ -102,7 +102,7 @@ app.get('/searchByDocName', docCntrl.searchDocuments);
 app.get('/searchByEmployee', docCntrl.searchDocumentsByEmployee);
 
 // Download document
-app.get('/downloadDocument', docCntrl.downloadDocument);
+app.post('/downloadDocument', docCntrl.downloadDocument);
 
 app.get('/docStatus',docCntrl.docStatus);
 app.get('/sendDoc',docCntrl.sendDocpage);

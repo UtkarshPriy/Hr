@@ -6,7 +6,7 @@ const docSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  key: {
+  Key: {
     type: String,
     required: true,
     unique: true,
@@ -45,7 +45,7 @@ const docSchema = new mongoose.Schema({
 });
 
 // Adding indexes for better query performance
-docSchema.index({ key: 1 });
+docSchema.index({ Key: 1 });
 docSchema.index({ uploader: 1 });
 
 const Doc = mongoose.model('Doc', docSchema);
