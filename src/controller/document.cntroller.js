@@ -8,7 +8,9 @@ import { create } from 'domain';
 import jwt from 'jsonwebtoken';
 import DocEmployeeRelation from '../model/docEmployeeRelation.model.js';
 import UserList from '../model/user.model.js';
+import Signature from '../model/signature.model.js';
 import nodemailer from 'nodemailer';
+
 // import DocEmployeeRelation from '../model/docEmployeeRelation.model.js';
 
 const privateKey = process.env.JWT_SECRET || "Utkarsh";
@@ -189,16 +191,6 @@ export const sendDoc = async(req,res)=>{
         //     },
         // });
 
-
-        // const transporter = nodemailer.createTransport({
-        //     host: 'smtp-relay.brevo.com',
-        //     port: 587,
-        //     secure: false, // true for 465, false for other ports
-        //     auth: {
-        //         user: process.env.BREVO_USER, // your Brevo email address
-        //         pass: process.env.BREVO_PASS, // your Brevo SMTP password
-        //     },
-        // });
         const transporter = nodemailer.createTransport({
             host:'smtp.gmail.com',
             port: 465,
@@ -227,13 +219,64 @@ export const sendDoc = async(req,res)=>{
 
 
     });    
+ 
     //Update isSent
     await Doc.findByIdAndUpdate(id,{isSent:true});
     const docList = await Doc.find({});
     req.flash('message', 'Document sent!!');
     res.render('send_doc',{documents:docList,message: req.flash('message')});
 };
+// Save Signature
 
+export const signDocument = async (req, res) => {
+    const { docName, Key,emp_email, name, url, owner, location, reason, contact, datetime } = req.body;
+    try {
+        let newSign = {
+            docName: docName,
+            Key: Key,
+            url: url,
+            owner: owner,
+            employee_name: name,
+            employee_email:emp_email,
+            signLocation: location,
+            signReason: reason,
+            signContact: contact,
+            signDatetime: datetime,
+            status: 'signed',
+        };
+        const signature = await Signature.create(newSign);
+        req.flash('message', 'Document Signed');
+        res.status(201).redirect('/employee', { message: req.flash('message') });
+    } catch (error) {
+        console.log(error);
+        req.flash('error', 'Error signing document');
+        res.status(500).redirect('/employee', { error: req.flash('error') });
+    }
+};
+// Reject to Sign
+
+export const rejectSign = async (req, res) => {
+    const { docName, Key, name, url, owner, datetime } = req.body;
+    try {
+        let newSign = {
+            docName: docName,
+            Key: Key,
+            url: url,
+            owner: owner,
+            employee_name: name,
+            employee_email:emp_email,
+            signDatetime: datetime,
+            status: 'rejected',
+        };
+        const signature = await Signature.create(newSign);
+        req.flash('message', 'Document Rejected');
+        res.status(201).redirect('/employee', { message: req.flash('message') });
+    } catch (error) {
+        console.log(error);
+        req.flash('error', 'Error rejecting document');
+        res.status(500).redirect('/employee', { error: req.flash('error') });
+    }
+};
 // Download signedDoc
 
 export const signedDoc = async (req, res) => {

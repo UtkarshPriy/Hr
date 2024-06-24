@@ -1,38 +1,52 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
+const addSignatureToS3Document = async (bucketName, key, outputKey, signatureText) => {
+    const signatureText = `
+Digital Signature
+Name: ${name}
+Location: ${location}
+Reason: ${reason}
+Contact: ${contact}
+Timestamp: ${timestamp}
+`;
+    try {
+        // Download the PDF document from S3
+        const { Body } = await s3.getObject({ Bucket: bucketName, Key: key }).promise();
+        const existingPdfBytes = Body;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+        // Load the existing PDF into pdf-lib
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
-app.set('view engine', 'ejs');
+        // Add a new page to the document for the signature
+        const page = pdfDoc.addPage();
 
-// Sample documents array
-const documents = [
-    { id: 1, name: 'Document 1' },
-    { id: 2, name: 'Document 2' },
-    { id: 3, name: 'Document 3' }
-];
+        // Draw the signature text on the new page
+        const { width, height } = page.getSize();
+        page.drawText(signatureText, {
+            x: 50,
+            y: height - 100, // Position the signature at the bottom of the page
+            size: 12,
+            color: rgb(0, 0, 0), // Black color
+        });
 
-app.get('/signDocument', (req, res) => {
-    res.render('signDocument', { documents: documents, message: '' });
-});
+        // Save the modified PDF with the signature added
+        const modifiedPdfBytes = await pdfDoc.save();
 
-app.post('/signDocument', (req, res) => {
-    const { documentId, name, location, reason, contact, datetime } = req.body;
-    // Handle the form submission logic
-    console.log('Document Signed:', { documentId, name, location, reason, contact, datetime });
-    res.render('signDocument', { documents: documents, message: 'Document signed successfully!' });
-});
+        // Upload the modified PDF back to S3
+        await s3.putObject({
+            Bucket: bucketName,
+            Key: outputKey,
+            Body: modifiedPdfBytes,
+        }).promise();
 
-app.post('/rejectSign', (req, res) => {
-    const { documentId } = req.body;
-    // Handle the rejection logic
-    console.log('Document Rejected:', documentId);
-    res.json({ message: 'Document rejected successfully' });
-});
+        console.log('Signature added to PDF in S3 bucket successfully!');
+    } catch (error) {
+        console.error('Error adding signature to PDF in S3:', error);
+    }
+};
 
-// Start the server
-app.listen(3000, () => {
-    console.log('Server started on http://localhost:3000');
-});
+// Usage example
+const bucketName = 'YOUR_S3_BUCKET_NAME';
+const inputKey = 'path/to/existing/document.pdf';
+const outputKey = 'path/to/output/signed_document.pdf';
+const signatureText = 'Digital Signature: John Doe';
+
+addSignatureToS3Document(bucketName, inputKey, outputKey, signatureText);

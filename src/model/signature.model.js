@@ -6,7 +6,7 @@ const signatureSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  key: {
+  Key: {
     type: String,
     required: true,
     trim: true,
@@ -42,6 +42,11 @@ const signatureSchema = new mongoose.Schema({
   signContact: {
     type: String,
     trim: true,
+  },
+  signUrl: {
+    type: String,
+    trim: true,
+    default: null,
   },
   signDatetime: {
     type: Date,

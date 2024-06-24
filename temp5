@@ -35,47 +35,38 @@
                     </div>
                     <div class="card-body">
                         <% documents.forEach(function(document, index) { %>
-                            <form id="signForm-<%= index %>" action="/signDocument" method="POST" class="d-inline-block">
+                            <form action="/signDocument" method="POST">
                                 <div class="form-group text-center">
                                     <label>Document: <strong><%= document.docName %></strong></label>
                                     <a href="<%= document.url %>" class="btn btn-secondary ml-2" download>Download</a>
                                     <input type="hidden" name="docName" value="<%= document.docName %>">
-                                    <input type="hidden" name="emp_email" value="<%= emp_email %>">
                                     <input type="hidden" name="Key" value="<%= document.Key %>">
                                     <input type="hidden" name="url" value="<%= document.url %>">
                                     <input type="hidden" name="owner" value="<%= document.owner %>">
-                                    
+
                                 </div>
                                 <div class="form-group">
                                     <label for="name-<%= index %>">Name</label>
-                                    <input type="text" class="form-control" id="name-<%= index %>" name="name" value="<%=username %>" readonly>
+                                    <input type="text" class="form-control" id="name-<%= index %>" name="name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="location-<%= index %>">Location</label>
-                                    <input type="text" class="form-control" id="location-<%= index %>" name="location" >
+                                    <input type="text" class="form-control" id="location-<%= index %>" name="location" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="reason-<%= index %>">Reason</label>
-                                    <input type="text" class="form-control" id="reason-<%= index %>" name="reason" >
+                                    <input type="text" class="form-control" id="reason-<%= index %>" name="reason" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="contact-<%= index %>">Contact Information</label>
-                                    <input type="text" class="form-control" id="contact-<%= index %>" name="contact" >
+                                    <input type="text" class="form-control" id="contact-<%= index %>" name="contact" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="datetime-<%= index %>">Date and Time</label>
-                                    <input type="datetime-local" class="form-control" id="datetime-<%= index %>" name="datetime" value="<%= new Date().toISOString().slice(0, 16) %>"readonly>
+                                    <input type="datetime-local" class="form-control" id="datetime-<%= index %>" name="datetime" required>
                                 </div>
-                
-                                <button type="submit" class="btn btn-primary mr-2">Sign</button>
-                            </form>
-                            <form id="rejectForm-<%= index %>" action="/rejectSign" method="POST" class="d-inline-block">
-                                <input type="hidden" name="docName" value="<%= document.docName %>">
-                                <input type="hidden" name="emp_email" value="<%= emp_email %>">
-                                <input type="hidden" name="Key" value="<%= document.Key %>">
-                                <input type="hidden" name="url" value="<%= document.url %>">
-                                <input type="hidden" name="owner" value="<%= document.owner %>">
-                                <button type="submit" class="btn btn-danger">Reject</button>
+                                <button type="submit" class="btn btn-primary">Sign</button>
+                                <button type="button" class="btn btn-danger" onclick="rejectSign('<%= document.id %>')">Reject</button>
                             </form>
                             <hr>
                         <% }) %>
@@ -93,5 +84,24 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function rejectSign(documentId) {
+            fetch('/rejectSign', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ documentId: documentId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Document rejected successfully');
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>

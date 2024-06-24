@@ -111,6 +111,9 @@ app.post('/sign-pdf',docCntrl.signedDoc);
 
 
 app.get('/employee',userCntrl.employeepage);
+app.post('/signDocument',docCntrl.signDocument);
+app.post('/rejectSign',docCntrl.rejectSign);
+
 
 
 
