@@ -26,7 +26,7 @@
     </header>
     
     <nav>
-        <ul>
+         <ul>
             <li><a href="/addEmployee">Add Employee</a></li>
             <li><a href="/updateEmployee">Update Employee</a></li>
             <li><a href="/uploadDoc">Upload Doc</a></li>
@@ -43,6 +43,13 @@
                         <h3>Search Documents</h3>
                     </div>
                     <div class="card-body">
+                        <form action="/searchByDocName" method="GET" class="mb-3">
+                            <div class="form-group">
+                                <label for="docName">Document Name</label>
+                                <input type="text" class="form-control" id="docName" name="docName" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Search by Document Name</button>
+                        </form>
                         <form action="/searchByEmployee" method="GET">
                             <div class="form-group">
                                 <label for="employeeEmail">Employee Email</label>

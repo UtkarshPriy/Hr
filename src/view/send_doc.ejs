@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,6 @@
             <li><a href="/uploadDoc">Upload Doc</a></li>
             <li><a href="/docStatus">Doc Status</a></li>
             <li><a href="/sendDoc">Send Docs</a></li>
-
         </ul>
     </nav>
 
@@ -51,6 +49,7 @@
                                     <th>Document Name</th>
                                     <th>isSent</th>
                                     <th>Action</th>
+                                    <th>Download</th> <!-- Added Download column -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,6 +68,13 @@
                                             <% } else { %>
                                                 <button class="btn btn-secondary" disabled>Sent</button>
                                             <% } %>
+                                        </td>
+                                        <td>
+                                            <form action="/downloadDocument" method="POST">
+                                                <input type="hidden" name="Key" value="<%= doc.Key %>">
+                                                <input type="hidden" name="employee" value="<%= doc.employee %>">
+                                                <button type="submit" class="btn btn-primary">Download</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <% }); %>
@@ -90,4 +96,3 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

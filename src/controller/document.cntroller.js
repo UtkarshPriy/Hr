@@ -120,31 +120,33 @@ export const downloadDocument = async (req, res) => {
 
 /////////////////
 
-// Search documents by document name
-export const searchDocuments = async (req, res) => {
-    const { docName } = req.query;
+// // Search documents by document name
+// export const searchDocuments = async (req, res) => {
+//     const { docName } = req.query;
 
-    try {
-        const documents = await DocEmployeeRelation.find({ docName: new RegExp(docName, 'i') });
-        res.render('searchResults', { documents, query: docName });
-    } catch (error) {
-        console.error('Error searching documents:', error);
-        res.status(500).send('Internal Server Error');
-    }
-};
+//     try {
+//         const documents = await DocEmployeeRelation.find({ docName: new RegExp(docName, 'i') });
+//         res.render('searchResults', { documents, query: docName });
+//     } catch (error) {
+//         console.error('Error searching documents:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// };
 
 // Search documents by employee email
 export const searchDocumentsByEmployee = async (req, res) => {
-    const { email } = req.query;
-
     try {
-        const documents = await DocEmployeeRelation.find({ employee: new RegExp(email, 'i') });
-        res.render('searchResults', { documents, query: email });
+    const token = req.cookies['jwt'];
+    const decoded = jwt.verify(token, privateKey);
+    const owner = decoded.email;
+    const { email } = req.query;
+    const docList = await DocEmployeeRelation.find({employee:email});
+    res.status(200).render('search_signed',{documents:docList,owner:owner});
     } catch (error) {
-        console.error('Error searching documents:', error);
-        res.status(500).send('Internal Server Error');
-    }
-};
+        console.log(error);
+        res.status(501).redirect('/');
+    }   
+};  
 
 export const docStatus = async(req,res)=>{
     const token = req.cookies['jwt'];

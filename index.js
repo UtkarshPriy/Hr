@@ -14,7 +14,6 @@ import AWS from 'aws-sdk';
 import fs from 'fs';
 import multer from 'multer';
 import Authicate from './src/middleware/authenticate.js';
-// import * as Auth from './src/middleware/authenticate.js';
 import * as orgCntrl from './src/controller/organization.controller.js';
 import * as statusCntrl from './src/controller/status.controller.js';
 import * as docCntrl from './src/controller/document.cntroller.js';
@@ -98,7 +97,7 @@ app.post('/uploadDocument',authCntrl.isOwner, upload.single('document'), docCntr
 
 
 // Search by document name
-app.get('/searchByDocName', docCntrl.searchDocuments);
+// app.get('/searchByDocName', docCntrl.searchDocuments);
 
 // Search by employee email
 app.get('/searchByEmployee', docCntrl.searchDocumentsByEmployee);
