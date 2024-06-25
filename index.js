@@ -60,7 +60,7 @@ app.get('/',userCntrl.home);
 app.get('/signIn',userCntrl.signin);
 app.post('/userlogin',authCntrl.defineUser);
 app.get('/admin',userCntrl.adminpage);
-app.post('/addAdmin',userCntrl.addAdmin);
+app.post('/addAdmin2020',userCntrl.addAdmin);
 app.get('/addsubadmin',userCntrl.addsubAdminpage);
 app.get("/updatesubAdmin",userCntrl.updatesubAdminpage);
 app.post("/addsubadmin",userCntrl.addsubAdmin);

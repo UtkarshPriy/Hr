@@ -410,7 +410,7 @@ Reason: ${signReason}
 Contact: ${signContact}
 Timestamp: ${signDatetime}
 `;
-        console.log(signatureText);
+        // console.log(signatureText);
         // Download the PDF document from S3
         const { Body } = await s3.getObject({ Bucket: bucketName, Key: Key }).promise();
         const existingPdfBytes = Body;

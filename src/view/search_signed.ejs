@@ -86,11 +86,15 @@
                                             <td><%= doc.employee %></td>
                                             <td><%= doc.status %></td>
                                             <td>
-                                                <form action="/downloadDocumentt" method="POST" class="d-inline">
-                                                    <input type="hidden" name="Key" value="<%= doc.Key %>">
-                                                    <input type="hidden" name="employee" value="<%= doc.employee %>">
-                                                    <button type="submit" class="btn btn-sm btn-primary">Download</button>
-                                                </form>
+                                                <% if (doc.status === 'signed') { %>
+                                                    <form action="/downloadDocumentt" method="POST" class="d-inline">
+                                                        <input type="hidden" name="Key" value="<%= doc.Key %>">
+                                                        <input type="hidden" name="employee" value="<%= doc.employee %>">
+                                                        <button type="submit" class="btn btn-sm btn-primary">Download</button>
+                                                    </form>
+                                                <% } else { %>
+                                                    <button type="button" class="btn btn-sm btn-primary" disabled>Download</button>
+                                                <% } %>
                                             </td>
                                         </tr>
                                     <% }) %>
