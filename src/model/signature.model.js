@@ -49,7 +49,7 @@ const signatureSchema = new mongoose.Schema({
     default: null,
   },
   signDatetime: {
-    type: Date,
+    type: String,
   },
   status: {
     type: String,

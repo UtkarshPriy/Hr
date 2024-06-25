@@ -246,17 +246,17 @@ export const signDocument = async (req, res) => {
         };
         const signature = await Signature.create(newSign);
         req.flash('message', 'Document Signed');
-        res.status(201).redirect('/employee', { message: req.flash('message') });
+        res.status(201).redirect('/employee');
     } catch (error) {
         console.log(error);
         req.flash('error', 'Error signing document');
-        res.status(500).redirect('/employee', { error: req.flash('error') });
+        res.status(500).redirect('/employee');
     }
 };
 // Reject to Sign
 
 export const rejectSign = async (req, res) => {
-    const { docName, Key, name, url, owner, datetime } = req.body;
+    const { docName, Key,emp_email, name, url, owner, datetime } = req.body;
     try {
         let newSign = {
             docName: docName,
@@ -268,13 +268,14 @@ export const rejectSign = async (req, res) => {
             signDatetime: datetime,
             status: 'rejected',
         };
+        // console.log(newSign);
         const signature = await Signature.create(newSign);
         req.flash('message', 'Document Rejected');
-        res.status(201).redirect('/employee', { message: req.flash('message') });
+        res.status(201).redirect('/employee');
     } catch (error) {
         console.log(error);
         req.flash('error', 'Error rejecting document');
-        res.status(500).redirect('/employee', { error: req.flash('error') });
+        res.status(500).redirect('/employee');
     }
 };
 // Download signedDoc

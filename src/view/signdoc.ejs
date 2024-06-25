@@ -40,9 +40,9 @@
                                     <label>Document: <strong><%= document.docName %></strong></label>
                                     <a href="<%= document.url %>" class="btn btn-secondary ml-2" download>Download</a>
                                     <input type="hidden" name="docName" value="<%= document.docName %>">
-                                    <input type="hidden" name="emp_email" value="<%= emp_email %>">
+                                    <input type="hidden" name="emp_email" value="<%= emp_email %>">                                    
                                     <input type="hidden" name="Key" value="<%= document.Key %>">
-                                    <input type="hidden" name="url" value="<%= document.url %>">
+                                    <input type="hidden" name="url" value="<%= document.docURL %>">
                                     <input type="hidden" name="owner" value="<%= document.owner %>">
                                     
                                 </div>
@@ -72,8 +72,10 @@
                             <form id="rejectForm-<%= index %>" action="/rejectSign" method="POST" class="d-inline-block">
                                 <input type="hidden" name="docName" value="<%= document.docName %>">
                                 <input type="hidden" name="emp_email" value="<%= emp_email %>">
+                                <input type="hidden" name="name" value="<%= username %>">
+                                <input type="hidden" name="signDatetime" value="<%= new Date().toISOString().slice(0, 16) %>">
                                 <input type="hidden" name="Key" value="<%= document.Key %>">
-                                <input type="hidden" name="url" value="<%= document.url %>">
+                                <input type="hidden" name="url" value="<%= document.docURL %>">
                                 <input type="hidden" name="owner" value="<%= document.owner %>">
                                 <button type="submit" class="btn btn-danger">Reject</button>
                             </form>

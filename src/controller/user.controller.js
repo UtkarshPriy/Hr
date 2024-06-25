@@ -63,7 +63,7 @@ export default class User{
             const decoded = jwt.verify(token, privateKey);
             const email = decoded.email;
             const username = decoded.name;        
-            console.log(username);
+            // console.log(email);
             const doc_list = await DocEmployeeRelation.find({employee:email,status:'pending'});
             res.status(200).render("signdoc",{documents:doc_list,username:username,emp_email:email});
         }catch(error){
