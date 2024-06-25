@@ -12,7 +12,6 @@ export default class Authicate{
           const user = await UserList.findOne({ email });
 
           if (!user) {
-            console.log("user");
             req.flash('message', 'User not found');
             return res.redirect('/signIn');
           }
@@ -53,9 +52,10 @@ export default class Authicate{
         } catch (error) {
           console.error(error);
           console.log(error);
-          res.status(500).json({ message: 'Server error' });
+          res.status(500).redirect('/signIn');
         }
       };
+
       signOut = (req, res) => {
         res.cookie('jwt', '', {
             httpOnly: true,
@@ -64,4 +64,135 @@ export default class Authicate{
         return res.status(200).render('login');
 
     }
+    isAdmin = async(req,res,next)=>{
+      
+
+      try {
+        const token = req.cookies['jwt'];
+        const decoded = jwt.verify(token, privateKey);
+        const email = decoded.email;
+        const password = decoded.passcode;
+
+        
+
+        // Find user by email
+        const user = await UserList.findOne({ email });
+
+        if (!user) {
+          req.flash('message', 'User not found');
+          return res.redirect('/signIn');
+        }
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+          req.flash('message', 'Invalid credentials');
+          return res.redirect('/signIn');
+      };
+      if(user.role ==='admin' && user.status ==='active'){
+        next();
+      }
+
+    }catch(error){
+      console.log(error);
+      return res.redirect('/signIn');
+    }
+  };
+  issubAdmin = async(req,res,next)=>{
+    
+    try {
+      const token = req.cookies['jwt'];
+      const decoded = jwt.verify(token, privateKey);
+      const email = decoded.email;
+      const password = decoded.passcode;
+      // Find user by email
+      const user = await UserList.findOne({ email });
+
+      if (!user) {
+        req.flash('message', 'User not found');
+        return res.redirect('/signIn');
+      }
+      // Compare passwords
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        req.flash('message', 'Invalid credentials');
+        return res.redirect('/signIn');
+    };
+    if(user.role ==='sub_admin' && user.status ==='active') {
+      next();
+    }
+
+  }catch(error){
+    console.log(error);
+    return res.redirect('/signIn');
+  }
+};
+isOwner = async(req,res,next)=>{
+  
+
+
+  try {
+    const token = req.cookies['jwt'];
+    const decoded = jwt.verify(token, privateKey);
+    const email = decoded.email;
+    const password = decoded.passcode;
+
+    // Find user by email
+    const user = await UserList.findOne({ email });
+
+    if (!user) {
+      console.log("user");
+      req.flash('message', 'User not found');
+      return res.redirect('/signIn');
+    }
+    // Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      req.flash('message', 'Invalid credentials');
+      return res.redirect('/signIn');
+  };
+  if(user.role ==='owner' && user.status ==='active'){
+    next();
+  }
+
+}catch(error){
+  console.log(error);
+  return res.redirect('/signIn');
+}
+};
+isEmployee = async(req,res,next)=>{
+  
+
+
+  try {
+    const token = req.cookies['jwt'];
+    const decoded = jwt.verify(token, privateKey);
+    const email = decoded.email;
+    const password = decoded.passcode;
+
+    // Find user by email
+    const user = await UserList.findOne({ email });
+
+    if (!user) {
+      req.flash('message', 'User not found');
+      return res.redirect('/signIn');
+    }
+    // Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      req.flash('message', 'Invalid credentials');
+      return res.redirect('/signIn');
+  };
+  if(user.role ==='employee' && user.status ==='active'){
+    next();
+  }
+
+}catch(error){
+  console.log(error);
+  return res.redirect('/signIn');
+}
+};
+
+
+
 }

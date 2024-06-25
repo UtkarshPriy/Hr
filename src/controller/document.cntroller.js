@@ -147,13 +147,19 @@ export const searchDocumentsByEmployee = async (req, res) => {
 };
 
 export const docStatus = async(req,res)=>{
-    const docList = await DocEmployeeRelation.find({});
+    const token = req.cookies['jwt'];
+    const decoded = jwt.verify(token, privateKey);
+    const owner = decoded.email;
+    const docList = await DocEmployeeRelation.find({owner:owner});
     res.status(200).render('search_signed',{documents:docList});
 
 };
 
 export const sendDocpage = async(req,res)=>{
-    const docList = await Doc.find({});
+    const token = req.cookies['jwt'];
+    const decoded = jwt.verify(token, privateKey);
+    const owner = decoded.email;
+    const docList = await Doc.find({uploader:owner});
     res.status(200).render('send_doc',{documents:docList});
 };
 
@@ -162,17 +168,7 @@ export const sendDoc = async(req,res)=>{
     console.log(organizationName);
     const doc_list = await Doc.findById({_id:id}).lean();
 
-    // const employee_list = await UserList.find({organizationName:organizationName,role:'employee',status:'active'}).lean();
-    // console.log(employee_list);
-
-    // const newEntries = doc_list.flatMap(doc=>employee_list.map(emp=>(
-            // return{
-    //     owner:owner,
-    //     employee:emp.email ,
-    //     docName:doc.docName,
-    //     key:doc.key,
-    //     docURL:doc.docURL
-    // })));
+    
     const employee_list = await UserList.find({ organizationName: organizationName, role: 'employee', status: 'active' }).lean();
     const newEntries = employee_list.map(emp => (
         {
@@ -207,7 +203,7 @@ export const sendDoc = async(req,res)=>{
         // Define the email options
         const mailOptions = {
             from:process.env.EMAIL_USER,  //'test@bslhg.com'|| process.env.BREVO_USER,
-            to: 'utkarsh.priy@gmail.com',
+            to: emp.email, //'utkarsh.priy@gmail.com',
             subject: 'Pending Docs to acknowledge on SignaTrack',
             html: '<h1>Hi, please click to review pending docs</h1><p>Click <a href="https://your-link-here.com">here</a> to review the documents.</p>', // HTML body with link
         };
@@ -365,31 +361,8 @@ export const signedDoc = async (req, res) => {
 };
 
 
-// Download document function
-// export const downloadDocument = async (req, res) => {
-//     try {
-//         const { key } = req.body;
+// Actual Download signedDoc
 
-//         const params = {
-//             Bucket: process.env.AWS_BUCKET_NAME,
-//             Key: key,
-//         };
-
-//         s3.getObject(params, (err, data) => {
-//             if (err) {
-//                 console.error('Error downloading from S3:', err);
-//                 res.status(500).send('Error downloading from S3');
-//                 return;
-//             }
-
-//             res.attachment(key); // Sets the filename for the download
-//             res.send(data.Body);
-//         });
-//     } catch (error) {
-//         console.error('Error:', error);
-//         res.status(500).send('Internal Server Error');
-//     }
-// };
 
 export const addSignatureToS3Document = async (req, res) => {
     const { Key, employee } = req.body;
