@@ -141,7 +141,6 @@ isOwner = async(req,res,next)=>{
     const user = await UserList.findOne({ email });
 
     if (!user) {
-      console.log("user");
       req.flash('message', 'User not found');
       return res.redirect('/signIn');
     }
