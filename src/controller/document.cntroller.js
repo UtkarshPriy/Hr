@@ -247,6 +247,10 @@ export const signDocument = async (req, res) => {
         const signature = await Signature.create(newSign);
         req.flash('message', 'Document Signed');
         res.status(201).redirect('/employee');
+        await DocEmployeeRelation.findOneAndUpdate(
+            { owner: owner, docName: docName, employee: emp_email },
+            { status: 'signed' }
+        );
     } catch (error) {
         console.log(error);
         req.flash('error', 'Error signing document');
@@ -272,6 +276,10 @@ export const rejectSign = async (req, res) => {
         const signature = await Signature.create(newSign);
         req.flash('message', 'Document Rejected');
         res.status(201).redirect('/employee');
+        await DocEmployeeRelation.findOneAndUpdate(
+            { owner: owner, docName: docName, employee: emp_email },
+            { status: 'rejected' }
+        );
     } catch (error) {
         console.log(error);
         req.flash('error', 'Error rejecting document');
