@@ -410,7 +410,7 @@ Reason: ${signReason}
 Contact: ${signContact}
 Timestamp: ${signDatetime}
 `;
-
+        console.log(signatureText);
         // Download the PDF document from S3
         const { Body } = await s3.getObject({ Bucket: bucketName, Key: Key }).promise();
         const existingPdfBytes = Body;
@@ -425,9 +425,12 @@ Timestamp: ${signDatetime}
         // Draw the signature text at the bottom of the last page
         lastPage.drawText(signatureText, {
             x: 50,
-            y: 50, // Adjust this value to position the signature properly
-            size: 12,
+            y: 105, // Adjust this value to position the signature properly
+            size: 8,
+            font: await pdfDoc.embedFont('Helvetica'), // Custom font type (e.g., Helvetica)
             color: rgb(0, 0, 0), // Black color
+            maxWidth: lastPage.getWidth() - 100, // Ensure the text fits within the page
+            lineHeight: 11 // Adjust line height to fit text
         });
 
         // Save the modified PDF with the signature added
