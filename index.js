@@ -103,6 +103,9 @@ app.get('/searchByEmployee', docCntrl.searchDocumentsByEmployee);
 
 // Download document
 app.post('/downloadDocument', docCntrl.downloadDocument);
+//test
+app.post('/downloadDocumentt', docCntrl.addSignatureToS3Document);
+
 
 app.get('/docStatus',docCntrl.docStatus);
 app.get('/sendDoc',docCntrl.sendDocpage);
