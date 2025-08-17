@@ -296,7 +296,7 @@ POST /rejectSign
 **Utkarsh Priy**
 
 - GitHub: [@UtkarshPriy](https://github.com/UtkarshPriy)
-- LinkedIn: [Connect with me](https://linkedin.com/in/your-profile)
+- LinkedIn: [Connect with me](https://www.linkedin.com/in/utkarshpriy/)
 
 ## 📝 License
 
