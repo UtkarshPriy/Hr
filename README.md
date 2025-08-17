@@ -6,28 +6,26 @@ A comprehensive role-based Document Maintenance System built with Node.js, Expre
 
 **🚀 [View Live Application](https://hr-17e5.onrender.com)**
 
-## <img width="2559" height="830" alt="image" src="https://github.com/user-attachments/assets/82dc8980-399d-421b-a0e7-1b6b45ef8055" />
-
-
-### Dashboard Overview
-
 <img width="2559" height="1189" alt="image" src="https://github.com/user-attachments/assets/4fd47cd1-939f-4dfc-abbc-9c7b466ae5e7" />
+
+
 
 
 ### Document Management
 
+## <img width="2559" height="830" alt="image" src="https://github.com/user-attachments/assets/82dc8980-399d-421b-a0e7-1b6b45ef8055" />
+
+### Admin Panel
+
 <img width="2559" height="864" alt="image" src="https://github.com/user-attachments/assets/2f11dc17-16ad-4a8a-b681-5aca4dbea8df" />
 
 
-### Employee View
+### Sub-Admin View
 
 <img width="2559" height="864" alt="image" src="https://github.com/user-attachments/assets/597c23a6-f42e-4a2a-afb9-da7ffa49ce45" />
 <img width="2559" height="1219" alt="image" src="https://github.com/user-attachments/assets/0905d920-25fa-4058-a8fd-0063d392cfc9" />
 
 
-### Admin Panel
-
-![Uploading image.png…]()
 
 
 ## ✨ Key Highlights
